@@ -10,6 +10,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import color from "../config/color";
+import { log } from "../Utility/Logger";
 
 function ImageInput({ imageUri, onChangeUri }) {
   const handlePress = () => {
@@ -36,7 +37,7 @@ function ImageInput({ imageUri, onChangeUri }) {
       });
       if (!result.cancelled) onChangeUri(result.uri);
     } catch (error) {
-      console.log(error);
+      log(error);
     }
   };
 

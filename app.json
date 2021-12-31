@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Practie",
-    "slug": "Practie",
+    "name": "DemoApp",
+    "slug": "DemoApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/appicon.png",
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "cover",
@@ -15,16 +15,32 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vickyChauhan.DemoApp",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "com.vickyChauhan.DemoApp",
+      "versionCode": "1",
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./app/assets/adaptive-icon.png"
       }
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
+    },
+    "extra": {
+      "bugsnag": {
+        "apiKey": "cf160bb92dcc535404850cf70e44e141"
+      }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "@bugsnag/expo/hooks/post-publish.js",
+          "config": {}
+        }
+      ]
     }
   }
 }

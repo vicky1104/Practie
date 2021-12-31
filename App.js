@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, StatusBar, Platform, Text, View } from "react-native";
+import { StyleSheet, StatusBar, Platform, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import MyTheme from "./app/Screens/Navigation/NavigationTheme";
 import AppNavigator from "./app/Screens/Navigation/AppNavigator";
@@ -10,7 +10,7 @@ import { AuthContext } from "./app/Auth/auth";
 import { getToken } from "./app/Auth/Store";
 import NavigationAuth from "./app/Screens/Navigation/NavigationAuth";
 import jwtDecode from "jwt-decode";
-import RegisterForm from "./app/Components/Form/RegisterForm";
+import { start } from "./app/Utility/Logger";
 
 export default function App() {
   const [network, setNetwork] = React.useState(false);
@@ -33,7 +33,7 @@ export default function App() {
     return setUser(user);
   };
 
-  React.useEffect(() => restoreUser, []);
+  React.useEffect(() => restoreUser, start(), []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

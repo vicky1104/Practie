@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import moment from "moment";
+// import moment from "moment";
+import dayjs from "dayjs";
+import { log } from "./Logger";
 
 const store = async (key, value) => {
   try {
@@ -9,7 +11,7 @@ const store = async (key, value) => {
     };
     await AsyncStorage.setItem(key, JSON.stringify(item));
   } catch (error) {
-    console.log(error);
+    log(error);
   }
 };
 
@@ -19,9 +21,9 @@ const get = async (key) => {
     const parseData = JSON.parse(getData);
     if (!parseData) return null;
 
-    const crrDate = moment(Date.now());
-    const prevDate = moment(parseData.timestamp);
-    const difference = crrDate.diff(prevDate, "minutes") > 5;
+    const crrDate = dayjs();
+    const prevDate = dayjs(parseData.timestamp);
+    const difference = crrDate.diff(prevDate, "minute") > 5;
 
     if (difference) {
       await AsyncStorage.removeItem(key);
@@ -30,7 +32,7 @@ const get = async (key) => {
       parseData.value;
     }
   } catch (error) {
-    console.log(error);
+    log(error);
   }
 };
 export { store, get };

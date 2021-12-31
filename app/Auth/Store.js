@@ -1,11 +1,14 @@
 import * as SecureStore from "expo-secure-store";
+import { log } from "../Utility/Logger";
 
 const key = "tokenKey";
+
 export const setToken = async (value) => {
+  console.log(value);
   try {
-    return await SecureStore.setItemAsync(key, value);
+    await SecureStore.setItemAsync(key, value);
   } catch (error) {
-    console.log("Error while storing data", error);
+    log(error);
   }
 };
 
@@ -13,7 +16,7 @@ export const getToken = async () => {
   try {
     return await SecureStore.getItemAsync(key);
   } catch (error) {
-    console.log("Error while getting token");
+    log(error);
   }
 };
 
@@ -21,6 +24,6 @@ export const removeToken = async () => {
   try {
     return await SecureStore.deleteItemAsync(key);
   } catch (error) {
-    console.log("Error while removing token", error);
+    log(error);
   }
 };

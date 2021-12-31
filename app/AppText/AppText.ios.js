@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   txt: {
     fontSize: 18,
     color: color.black,
-    fontFamily: "serif",
     fontWeight: "300",
   },
 });

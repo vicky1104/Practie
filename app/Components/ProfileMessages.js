@@ -37,10 +37,7 @@ function ProfileMessages({ routes }) {
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableHighlight
-            underlayColor={color.lightwhite}
-            onPress={() => console.log()}
-          >
+          <TouchableHighlight underlayColor={color.lightwhite}>
             <View style={styles.view}>
               <Image style={styles.img} source={item.img} />
 

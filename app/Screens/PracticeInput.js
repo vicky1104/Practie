@@ -5,12 +5,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { useFormikContext } from "formik";
 import ErrorMessage from "../Components/ErrorMessage";
 
-function PracticeInput({ width = "100%", items, name, placeholder }) {
+function PracticeInput({ width = "100%", items, name, placeholder, icon }) {
   const { errors, setFieldValue, touched, values } = useFormikContext();
 
   return (
     <SafeAreaView style={styles.container} width={width}>
       <AppPicker
+        icon={icon}
         categoryName={values[name]}
         showName={(item) => setFieldValue(name, item)}
         items={items}

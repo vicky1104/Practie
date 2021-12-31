@@ -5,9 +5,10 @@ import {
   TouchableWithoutFeedback,
   View,
   Modal,
-  Button,
   FlatList,
   SafeAreaView,
+  Platform,
+  StatusBar,
 } from "react-native";
 import DefaultStyle from "../config/DefaultStyles";
 import PickerItem from "./PickerItem";
@@ -16,7 +17,7 @@ import AppButton from "./AppButton";
 
 function AppPicker({
   arrow,
-  icon,
+
   placeholder,
   items,
   showName,
@@ -29,7 +30,6 @@ function AppPicker({
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={() => setOpen(true)}>
         <View style={styles.container}>
-          <Text style={styles.icon}> {icon}</Text>
           <View style={styles.input}>
             <AppText width={width}>
               {categoryName ? (
@@ -69,9 +69,7 @@ function AppPicker({
 }
 
 const styles = StyleSheet.create({
-  btn: {
-    marginBottom: 20,
-  },
+  btn: { marginBottom: 20 },
   container: {
     height: 50,
     borderRadius: 15,

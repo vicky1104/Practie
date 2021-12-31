@@ -36,7 +36,6 @@ function LoginForm(props) {
     setLoginFailed(false);
     const user = jwtDecode(response.data);
     authContext.setUser(user);
-    console.log(response.data);
     setToken(response.data);
   };
   return (

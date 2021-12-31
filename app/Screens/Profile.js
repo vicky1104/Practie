@@ -6,10 +6,8 @@ import {
   Platform,
   StatusBar,
   FlatList,
-  Text,
   TouchableHighlight,
   SafeAreaView,
-  Alert,
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -32,10 +30,12 @@ function Profile({ navigation }) {
         />
       ),
       title: "My Listings",
+
       arrow: (
         <MaterialCommunityIcons name="greater-than" size={18} color="grey" />
       ),
       backgroundColor: color.primary,
+      targetScreen: "Feed",
     },
     {
       id: 2,

@@ -1,20 +1,17 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  StatusBar,
-  Platform,
-  SafeAreaView,
-} from "react-native";
-import AppButton from "../AppButton";
-import AppTextInput from "../AppTextInput";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import jwtDecode from "jwt-decode";
+import { View, StyleSheet, SafeAreaView } from "react-native";
+
+import AppButton from "../AppButton";
+import AppTextInput from "../AppTextInput";
 import ErrorMessage from "../ErrorMessage";
-import { RegisterUser } from "../../Api/auth";
+import { Login, RegisterUser } from "../../Api/auth";
 import AppText from "../../AppText/AppText";
 import { setToken } from "../../Auth/Store";
 import { AuthContext } from "../../Auth/auth";
+import { log } from "../../Utility/Logger";
 
 function RegisterForm(props) {
   const authContext = React.useContext(AuthContext);
@@ -22,19 +19,28 @@ function RegisterForm(props) {
 
   const validate = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
-    name: Yup.string().required().min(1).label("Name"),
+    name: Yup.string().required().min(2).label("Name"),
     password: Yup.string().required().min(5).label("Password"),
   });
 
   const handleSubmit = async ({ email, name, password }) => {
     const response = await RegisterUser(email, name, password);
+
     if (!response.ok) {
       setUserExist(response.data.error);
     } else {
-      setUserExist(null);
-      await setToken(response.data);
-      authContext.setUser(response.data);
-      console.log(response.data);
+      try {
+        setUserExist(null);
+        const token = await Login(email, password);
+        if (token) {
+          await setToken(token.data);
+
+          const user = jwtDecode(token.data);
+          authContext.setUser(user);
+        }
+      } catch (error) {
+        log(error);
+      }
     }
   };
 
@@ -56,6 +62,7 @@ function RegisterForm(props) {
             {userExist && (
               <AppText style={{ color: "red" }}>{userExist} </AppText>
             )}
+
             <AppTextInput
               icon="account"
               name="name"

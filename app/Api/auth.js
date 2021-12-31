@@ -1,7 +1,8 @@
 import client from "./Client";
 
-export const Login = (email, password) =>
-  client.post("/auth", { email, password });
-
-export const RegisterUser = (email, name, password) =>
-  client.post("/users", { email, name, password });
+export const Login = (email, password) => {
+  return client.post("/auth", { email, password }); //requires Token
+};
+export const RegisterUser = (email, name, password) => {
+  return client.post("/users", { email, name, password });
+};

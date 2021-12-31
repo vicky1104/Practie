@@ -17,6 +17,7 @@ import SubmitButton from "../Components/Form/SubmitButton";
 import FormImagePicker from "../Components/FormImagePicker";
 import { addListings } from "../Api/getListings";
 import PostModal from "../Components/PostModal";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function Display(props) {
   const validate = Yup.object().shape({
@@ -36,23 +37,24 @@ function Display(props) {
 
   React.useEffect(reqCameraPermision, []);
 
-  // `````````````````  REQUEST CAMERA PERMISSION
+  // `````````````````  REQUEST LOCATION PERMISSION
 
   const [location, setLocation] = React.useState();
   const reqLocationPermision = async () => {
-    let { granted } = Location.requestForegroundPermissionsAsync();
-
+    let { granted } = await Location.requestForegroundPermissionsAsync();
+    console.log(granted);
     if (!granted) {
       alert("need location permission ");
     } else {
+      const d = await Location.getCurrentPositionAsync();
+
       const {
         coords: { latitude, longitude },
-      } = await Location.getLastKnownPositionAsync();
+      } = d;
       setLocation({ latitude, longitude });
     }
   };
   React.useEffect(reqLocationPermision, []);
-  // console.log(location);
 
   const [progress, setProgress] = React.useState(0);
   const [visible, setVisible] = React.useState(false);
@@ -63,8 +65,11 @@ function Display(props) {
     setProgress(0);
     setVisible(true);
 
-    const result = await addListings(listings, { resetForm }, (progress) =>
-      setProgress(progress)
+    const result = await addListings(
+      listings,
+      location,
+      { resetForm },
+      (progress) => setProgress(progress)
     );
 
     if (!result.ok) {
@@ -75,17 +80,17 @@ function Display(props) {
 
   const categories = [
     {
-      label: "Furniture",
+      label: "Car",
       value: 1,
       icon: "apps",
     },
     {
-      label: "Clothing",
+      label: "Bike",
       value: 2,
       icon: "mail",
     },
     {
-      label: "House",
+      label: "Bus",
       value: 3,
       icon: "icon",
     },
@@ -136,6 +141,7 @@ function Display(props) {
               {/* `````````````````` CATEGORIES `````````````````` */}
 
               <PracticeInput
+                icon={categories.icon}
                 width={180}
                 items={categories}
                 name="categories"
@@ -162,7 +168,7 @@ function Display(props) {
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
 

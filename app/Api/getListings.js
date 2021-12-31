@@ -2,7 +2,7 @@ import client from "./Client";
 
 const getListing = () => client.get("/listings");
 
-const addListings = (listings, j, d, onUpload) => {
+const addListings = (listings, location, d, onUpload) => {
   const data = new FormData();
   data.append("title", listings.title);
   data.append("categoryId", listings.categories.value);
